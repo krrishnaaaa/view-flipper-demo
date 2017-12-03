@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">ViewFlipperDemo</string>
+    <string name="title">FeatureTitle</string>
+    <string name="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore.</string>
+</resources>
