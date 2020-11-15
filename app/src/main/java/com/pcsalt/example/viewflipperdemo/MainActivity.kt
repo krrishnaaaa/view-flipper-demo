@@ -2,8 +2,6 @@ package com.pcsalt.example.viewflipperdemo
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.Animation
@@ -12,13 +10,15 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.ViewFlipper
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var vf: ViewFlipper
-    lateinit var llIndicator: LinearLayout
-    lateinit var bgActive: Drawable
-    lateinit var bgInactive: Drawable
+    private lateinit var vf: ViewFlipper
+    private lateinit var llIndicator: LinearLayout
+    private var bgActive: Drawable? = null
+    private var bgInactive: Drawable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +42,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 val position: Int = vf.getChildAt(vf.displayedChild).tag as Int
-                var posInactive: Int
-                if (position == 0) {
-                    posInactive = vf.childCount - 1;
+                val posInactive: Int = if (position == 0) {
+                    vf.childCount - 1;
                 } else {
-                    posInactive = position - 1;
+                    position - 1;
                 }
 
                 val childInactive = (llIndicator.getChildAt(posInactive) as FrameLayout).getChildAt(0)
@@ -64,9 +63,8 @@ class MainActivity : AppCompatActivity() {
         vf.inAnimation.setAnimationListener(animationListener)
 
         vf.isAutoStart = true
-        vf.setFlipInterval(3000)
+        vf.flipInterval = 3000
         vf.startFlipping()
-
     }
 
     private fun generateFlipperView() {
